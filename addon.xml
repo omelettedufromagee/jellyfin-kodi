@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addon id="plugin.video.jellyfin" name="Jellyfin" version="1.0.5a+py3" provider-name="Omelette for DediDL">
+<addon id="plugin.video.jellyfin" name="Jellyfin" version="1.0.5+py3" provider-name="Omelette for DediDL">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="script.module.requests" version="2.22.0+matrix.1" />
