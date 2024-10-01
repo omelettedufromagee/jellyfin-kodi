@@ -233,7 +233,7 @@ class API(object):
             path = path.replace(protocol, protocol.lower())
             
             if protocol.lower() in ("http", "https", "ftp", "ftps", "dav", "davs"):
-                path = requote_uri(path)
+                path = requote_uri(path.replace("#", "%23"))
                 pattern = "%[A-Z,0-9][A-Z,0-9]"
                 result = set(re.findall(pattern,path))
                 
