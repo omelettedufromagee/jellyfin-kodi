@@ -72,3 +72,4 @@ Thumbs.db
 pyinstrument/
 
 *.log
+secrets.json

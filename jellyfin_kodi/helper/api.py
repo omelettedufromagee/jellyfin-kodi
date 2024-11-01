@@ -5,6 +5,8 @@ from __future__ import division, absolute_import, print_function, unicode_litera
 
 from requests.utils import requote_uri
 import re
+import json
+import os
 
 from . import settings, LazyLogger
 
@@ -208,20 +210,19 @@ class API(object):
 
         if not path:
             return ""
-
+        
+        if path.startswith('/media'):
+            file_dir = os.path.dirname(__file__)
+            with open(os.path.join(file_dir, "secrets.json")) as infile:
+                infile_data = json.load(infile)
+                path = path.replace('/media', infile_data['nativepath'], 1)
+        
         if path.startswith("\\\\"):
             path = (
                 path.replace("\\\\", "smb://", 1)
                 .replace("\\\\", "\\")
                 .replace("\\", "/")
             )
-
-        if "Container" in self.item:
-
-            if self.item["Container"] == "dvd":
-                path = "%s/VIDEO_TS/VIDEO_TS.IFO" % path
-            elif self.item["Container"] == "bluray":
-                path = "%s/BDMV/index.bdmv" % path
 
         path = path.replace("\\\\", "\\")
 
