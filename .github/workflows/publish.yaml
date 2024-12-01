@@ -15,10 +15,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.JF_BOT_TOKEN }}
 
       - name: Checkout repository
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.2.2
 
       - name: Set up Python
-        uses: actions/setup-python@v5.1.1
+        uses: actions/setup-python@v5.3.0
         with:
           python-version: 3.9
 
@@ -31,7 +31,7 @@ jobs:
         run: python build.py
 
       - name: Publish Build Artifact
-        uses: actions/upload-artifact@v4.3.6
+        uses: actions/upload-artifact@v4.4.3
         with:
           retention-days: 14
           name: py3-build-artifact
@@ -49,7 +49,7 @@ jobs:
           remote_key: ${{ secrets.REPO_KEY }}
 
       - name: Add to Kodi repo and clean up
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.REPO_HOST  }}
           username: ${{ secrets.REPO_USER }}
