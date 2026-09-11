@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, print_function, unicode_literals
 
 #################################################################################################
 
@@ -29,7 +28,6 @@ from ..helper import (
 )
 from ..helper.utils import (
     JsonDebugPrinter,
-    translate_path,
     kodi_version,
     path_replacements,
 )
@@ -72,7 +70,7 @@ class Events(object):
         jellyfin_client = Jellyfin(server).get_client()
         api_client = jellyfin_client.jellyfin
 
-        addon_data = translate_path(
+        addon_data = xbmcvfs.translatePath(
             "special://profile/addon_data/plugin.video.jellyfin/data.json"
         )
         try:
@@ -104,7 +102,36 @@ class Events(object):
         elif mode == "play":
 
             item = api_client.get_item(params["id"])
-            item["resumePlayback"] = sys.argv[3].split(":")[1] == "true"
+            timestamp = params.get("timestamp")
+            # check that timestamp is a float
+            try:
+                timestamp = float(timestamp)
+            except (TypeError, ValueError):
+                timestamp = None
+            # if we are playing the requested file and no timestamp is provided
+            # then seek to the beginning of the file (0.0).
+            if params["id"] == window("jellyfin_playing_id") and timestamp is None:
+                timestamp = 0.0
+            # a timestamp of 0.0 is false-y so check for None
+            if timestamp is not None:
+                player = xbmc.Player()
+                if player.isPlayingVideo():
+                    try:
+                        if params["id"] == window("jellyfin_playing_id"):
+                            player.seekTime(timestamp)
+                            return
+                    except Exception as e:
+                        LOG.debug("Failed to check playing file: %s", e)
+
+                item["UserData"] = item.get("UserData", {})
+                item["UserData"]["PlaybackPositionTicks"] = int(timestamp * 10000000.0)
+                item["resumePlayback"] = True
+            else:
+                try:
+                    item["resumePlayback"] = sys.argv[3].split(":")[1] == "true"
+                except IndexError:
+                    item["resumePlayback"] = False
+
             Actions(server, api_client).play(
                 item,
                 params.get("dbid"),
@@ -738,6 +765,16 @@ def browse(media, view_id=None, folder=None, server_id=None, api_client=None):
         xbmcplugin.addSortMethod(PROCESS_HANDLE, xbmcplugin.SORT_METHOD_DATE)
         xbmcplugin.addSortMethod(PROCESS_HANDLE, xbmcplugin.SORT_METHOD_VIDEO_RATING)
         xbmcplugin.addSortMethod(PROCESS_HANDLE, xbmcplugin.SORT_METHOD_VIDEO_RUNTIME)
+    elif media in ("boxset", "library"):
+        xbmcplugin.addSortMethod(PROCESS_HANDLE, xbmcplugin.SORT_METHOD_UNSORTED)
+        xbmcplugin.addSortMethod(PROCESS_HANDLE, xbmcplugin.SORT_METHOD_DATE)
+        xbmcplugin.addSortMethod(PROCESS_HANDLE, xbmcplugin.SORT_METHOD_VIDEO_YEAR)
+        xbmcplugin.addSortMethod(
+            PROCESS_HANDLE, xbmcplugin.SORT_METHOD_VIDEO_ORIGINAL_TITLE
+        )
+        xbmcplugin.addSortMethod(
+            PROCESS_HANDLE, xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE
+        )
 
     xbmcplugin.setContent(PROCESS_HANDLE, content_type)
     xbmcplugin.endOfDirectory(PROCESS_HANDLE)
@@ -839,7 +876,7 @@ def get_fanart(item_id, path, server_id=None, api_client=None):
     LOG.info("[ extra fanart ] %s", item_id)
     objects = Objects()
     list_li = []
-    directory = translate_path("special://thumbnails/jellyfin/%s/" % item_id)
+    directory = xbmcvfs.translatePath("special://thumbnails/jellyfin/%s/" % item_id)
 
     if not xbmcvfs.exists(directory):
 
@@ -920,18 +957,27 @@ def get_next_episodes(item_id, limit):
         if not library:
             return
 
-    result = JSONRPC("VideoLibrary.GetTVShows").execute(
-        {
-            "sort": {"order": "descending", "method": "lastplayed"},
-            "filter": {
-                "and": [
-                    {"operator": "true", "field": "inprogress", "value": ""},
-                    {"operator": "is", "field": "tag", "value": "%s" % library},
-                ]
-            },
-            "properties": ["title", "studio", "mpaa", "file", "art"],
-        }
-    )
+    max_days = settings("maxDaysInNextEpisodes")
+    params = {
+        "sort": {"order": "descending", "method": "lastplayed"},
+        "filter": {
+            "and": [
+                {"operator": "true", "field": "inprogress", "value": ""},
+                {"operator": "is", "field": "tag", "value": "%s" % library},
+            ]
+        },
+        "properties": ["title", "studio", "mpaa", "file", "art"],
+    }
+    if max_days != 0:
+        params["filter"]["and"].append(
+            {
+                "operator": "inthelast",
+                "field": "lastplayed",
+                "value": "%s days" % max_days,
+            }
+        )
+
+    result = JSONRPC("VideoLibrary.GetTVShows").execute(params)
 
     try:
         items = result["result"]["tvshows"]
@@ -1142,7 +1188,7 @@ def get_themes(api_client):
     from ..helper.playutils import PlayUtils
     from ..helper.xmls import tvtunes_nfo
 
-    library = translate_path(
+    library = xbmcvfs.translatePath(
         "special://profile/addon_data/plugin.video.jellyfin/library"
     )
     play = settings("useDirectPaths") == "1"
@@ -1250,7 +1296,9 @@ def backup():
 
         delete_folder(backup)
 
-    addon_data = translate_path("special://profile/addon_data/plugin.video.jellyfin")
+    addon_data = xbmcvfs.translatePath(
+        "special://profile/addon_data/plugin.video.jellyfin"
+    )
     destination_data = os.path.join(backup, "addon_data", "plugin.video.jellyfin")
     destination_databases = os.path.join(backup, "Database")
 
@@ -1271,18 +1319,18 @@ def backup():
 
     databases = Objects().objects
 
-    db = translate_path(databases["jellyfin"])
+    db = xbmcvfs.translatePath(databases["jellyfin"])
     xbmcvfs.copy(db, os.path.join(destination_databases, db.rsplit("\\", 1)[1]))
     LOG.info("copied jellyfin.db")
 
-    db = translate_path(databases["video"])
+    db = xbmcvfs.translatePath(databases["video"])
     filename = db.rsplit("\\", 1)[1]
     xbmcvfs.copy(db, os.path.join(destination_databases, filename))
     LOG.info("copied %s", filename)
 
     if settings("enableMusic.bool"):
 
-        db = translate_path(databases["music"])
+        db = xbmcvfs.translatePath(databases["music"])
         filename = db.rsplit("\\", 1)[1]
         xbmcvfs.copy(db, os.path.join(destination_databases, filename))
         LOG.info("copied %s", filename)

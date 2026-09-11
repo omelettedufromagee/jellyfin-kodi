@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, print_function, unicode_literals
 
 ##################################################################################################
 
 import xbmcgui
 
 from ..helper import LazyLogger
-from ..helper.utils import kodi_version
 
 ##################################################################################################
 
@@ -19,6 +17,7 @@ ACTION_MOUSE_LEFT_CLICK = 100
 LIST = 155
 MANUAL = 200
 CANCEL = 201
+QUICK_CONNECT = 202
 
 ##################################################################################################
 
@@ -27,10 +26,10 @@ class UsersConnect(xbmcgui.WindowXMLDialog):
 
     _user = None
     _manual_login = False
+    _quick_connect = False
 
     def __init__(self, *args, **kwargs):
 
-        self.kodi_version = kodi_version()
         xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
 
     def set_args(self, **kwargs):
@@ -46,6 +45,9 @@ class UsersConnect(xbmcgui.WindowXMLDialog):
 
     def is_manual_login(self):
         return self._manual_login
+
+    def is_quick_connect(self):
+        return self._quick_connect
 
     def onInit(self):
 
@@ -93,6 +95,10 @@ class UsersConnect(xbmcgui.WindowXMLDialog):
 
         if control == MANUAL:
             self._manual_login = True
+            self.close()
+
+        elif control == QUICK_CONNECT:
+            self._quick_connect = True
             self.close()
 
         elif control == CANCEL:

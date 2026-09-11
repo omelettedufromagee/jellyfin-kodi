@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, print_function, unicode_literals
+
+import json
+
+import xbmcvfs
 
 ##################################################################################################
 
 from requests.utils import requote_uri
 import re
-import json
 import os
 
 from . import settings, LazyLogger
-from .utils import translate_path
-import json
 
 ##################################################################################################
 
@@ -27,7 +27,7 @@ class API(object):
         self.item = item
         self.server = server
 
-        addon_data = translate_path(
+        addon_data = xbmcvfs.translatePath(
             "special://profile/addon_data/plugin.video.jellyfin/data.json"
         )
         try:
@@ -62,9 +62,12 @@ class API(object):
         if "People" in self.item:
             self.get_people_artwork(self.item["People"])
 
+            # Define the types of people considered "actors" in a "cast".
+            cast_types = ["Actor", "GuestStar"]
+
             for person in self.item["People"]:
 
-                if person["Type"] == "Actor":
+                if person["Type"] in cast_types:
                     cast.append(
                         {
                             "name": person["Name"],
