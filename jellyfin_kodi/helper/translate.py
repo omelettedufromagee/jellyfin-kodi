@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, print_function, unicode_literals
 
 ##################################################################################################
 
@@ -16,7 +15,7 @@ LOG = LazyLogger(__name__)
 
 
 def translate(string):
-    """Get add-on string. Returns in unicode."""
+    """Get add-on string. Returns a string."""
     if not isinstance(string, int):
         string = STRINGS[string]
 
@@ -41,6 +40,11 @@ STRINGS = {
     "cancel": 30606,
     "username": 30024,
     "password": 30602,
+    "quick_connect": 30618,
+    "quick_connect_code": 30619,
+    "quick_connect_waiting": 30620,
+    "quick_connect_unavailable": 30621,
+    "quick_connect_timeout": 30622,
     "gathering": 33021,
     "boxsets": 30185,
     "movies": 30302,

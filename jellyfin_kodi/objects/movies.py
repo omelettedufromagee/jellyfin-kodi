@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, print_function, unicode_literals
 
 ##################################################################################################
 
@@ -156,6 +155,7 @@ class Movies(KodiDb):
 
         obj["PathId"] = self.add_path(*values(obj, QU.add_path_obj))
         obj["FileId"] = self.add_file(*values(obj, QU.add_file_obj))
+        obj["VideoVersionItemType"] = self.itemtype
 
         self.add(*values(obj, QU.add_movie_obj))
         self.add_videoversion(*values(obj, QU.add_video_version_obj))
@@ -206,7 +206,7 @@ class Movies(KodiDb):
                 )
         except Exception as error:
 
-            LOG.exception("Failed to get trailer: %s", error)
+            LOG.exception("Failed to get trailer for movie %s: %s", obj["Id"], error)
             obj["Trailer"] = None
 
     def get_path_filename(self, obj):

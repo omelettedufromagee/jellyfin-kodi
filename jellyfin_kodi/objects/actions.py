@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, print_function, unicode_literals
 
 #################################################################################################
 
@@ -12,12 +11,12 @@ import xbmc
 import xbmcgui
 import xbmcplugin
 import xbmcaddon
+import xbmcvfs
 
 from ..helper import translate, playutils, api, window, settings, dialog
 from ..dialogs import resume
 from ..helper import LazyLogger
 from ..jellyfin import Jellyfin
-from ..helper.utils import translate_path
 
 from .obj import Objects
 
@@ -37,7 +36,7 @@ class Actions(object):
             LOG.debug("No api client provided, attempting to use config file")
             jellyfin_client = Jellyfin(server_id).get_client()
             api_client = jellyfin_client.jellyfin
-            addon_data = translate_path(
+            addon_data = xbmcvfs.translatePath(
                 "special://profile/addon_data/plugin.video.jellyfin/data.json"
             )
             try:
@@ -80,10 +79,14 @@ class Actions(object):
 
         self.set_playlist(item, listitem, db_id, transcode)
 
-        self.stack[0][1].setPath(self.stack[0][0])
+        # Using playlist approach for Cinema mode
+        if len(self.stack) > 1:
+            self._play_stack()
+        else:
+            self.stack[0][1].setPath(self.stack[0][0])
 
-        if len(sys.argv) > 1:
-            xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, self.stack[0][1])
+            if len(sys.argv) > 1:
+                xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, self.stack[0][1])
 
     def set_playlist(self, item, listitem, db_id=None, transcode=False):
         """Verify seektime, set intros, set main item and set additional parts.
@@ -149,6 +152,55 @@ class Actions(object):
 
                 window("jellyfin.skip.%s" % intro["Id"], value="true")
 
+    def _play_stack(self):
+        """Play multiple items from the stack using a playlist.
+
+        This is used for Cinema Mode (intros + movie) and multi-part videos.
+        Unlike setResolvedUrl which can only handle a single file, this method
+        creates a Kodi playlist and adds all items from the stack.
+
+        The key challenge is that when called from a plugin:// URL context, Kodi
+        expects setResolvedUrl() to provide the playback URL. But setResolvedUrl
+        can only handle a single item. To work around this, we:
+        1. First cancel the plugin resolution with setResolvedUrl(False)
+        2. Then build and start our playlist independently
+        """
+        playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+        player = xbmc.Player()
+
+        # Stop any current playback first and wait for it to fully stop
+        if player.isPlaying():
+            player.stop()
+            # Wait for playback to fully stop (up to 3 seconds)
+            for _ in range(30):
+                xbmc.sleep(100)
+                if not player.isPlaying():
+                    break
+
+        # Clear the playlist before cancelling plugin resolution
+        playlist.clear()
+
+        # Cancel the plugin resolution - this must happen after stopping playback
+        # to prevent race conditions with the previous playback session
+        if len(sys.argv) > 1:
+            xbmcplugin.setResolvedUrl(int(sys.argv[1]), False, xbmcgui.ListItem())
+
+        xbmc.executebuiltin("ActivateWindow(busydialognocancel)")
+
+        # Small delay to ensure plugin resolution is fully cancelled
+        xbmc.sleep(100)
+
+        # Add all items from the stack to the playlist
+        for index, (path, listitem) in enumerate(self.stack):
+            listitem.setPath(path)
+            playlist.add(path, listitem, index)
+            LOG.info("[ stack/%s ] %s", index, path[:60])
+
+        xbmc.executebuiltin("Dialog.Close(busydialognocancel)")
+
+        # Start playback from position 0 (the first intro)
+        player.play(playlist, startpos=0)
+
     def _set_additional_parts(self, item_id):
         """Create listitems and add them to the stack of playlist."""
         parts = self.api_client.get_additional_parts(item_id)
@@ -191,8 +243,12 @@ class Actions(object):
         listitem = xbmcgui.ListItem()
         LOG.info("[ playlist/%s ] %s", item["Id"], item["Name"])
 
-        # Automatically resume if the item is in progress (casting from server)
-        resume = item["UserData"].get("PlaybackPositionTicks")
+        # Resume from the cast command's StartPositionTicks (seektime) when it is
+        # given, otherwise the item's stored server-side position. Casting
+        # "continue from X" sends StartPositionTicks and must honor it, rather
+        # than the item's saved position (which may be stale or empty).
+        resume = seektime or item["UserData"].get("PlaybackPositionTicks")
+        item["UserData"]["PlaybackPositionTicks"] = resume
         item["resumePlayback"] = bool(resume)
 
         play = playutils.PlayUtils(
@@ -228,7 +284,7 @@ class Actions(object):
             LOG.info("[ playlist/%s ] %s", item["Id"], item["Name"])
 
             self.set_listitem(item, listitem, None, False)
-            path = "{}/Audio/{}/stream.mp3?static=true&api_key={}".format(
+            path = "{}/Audio/{}/stream.mp3?static=true&ApiKey={}".format(
                 server_address, item["Id"], token
             )
             listitem.setPath(path)
@@ -502,17 +558,19 @@ class Actions(object):
 
         if is_video:
 
-            listitem.setProperty("totaltime", str(obj["Runtime"]))
             listitem.setProperty("IsPlayable", "true")
             listitem.setProperty("IsFolder", "false")
 
+            # setResumePoint records the resume metadata (replaces the deprecated
+            # resumetime/totaltime properties). StartOffset is what actually makes
+            # the player begin at the resume position: it feeds the player start
+            # time (CApplication) and is honored for playlist/cast playback too.
+            tag = listitem.getVideoInfoTag()
+            tag.setResumePoint(obj["Resume"] or 0, obj["Runtime"] or 0)
             if obj["Resume"] and item.get("resumePlayback"):
-                listitem.setProperty("resumetime", str(obj["Resume"]))
-                listitem.setProperty(
-                    "StartPercent", str(((obj["Resume"] / obj["Runtime"]) * 100) - 0.40)
-                )
+                listitem.setProperty("StartOffset", str(obj["Resume"]))
             else:
-                listitem.setProperty("resumetime", "0")
+                listitem.setProperty("StartOffset", "0")
                 listitem.setProperty("StartPercent", "0")
 
             for track in obj["Streams"]["video"]:

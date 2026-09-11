@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Jellyfin for Kodi\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-26 14:01+0000\n"
+"PO-Revision-Date: 2026-09-07 12:23+0000\n"
 "Last-Translator: nextlooper42 <nextlooper42@protonmail.com>\n"
 "Language-Team: Slovak <https://translate.jellyfin.org/projects/jellyfin/"
 "jellyfin-kodi/sk/>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.7.2\n"
+"X-Generator: Weblate 5.15.1\n"
 
 msgctxt "#29999"
 msgid "Jellyfin for Kodi"
@@ -39,7 +39,7 @@ msgstr "Spôsob prihlasovania"
 
 msgctxt "#30004"
 msgid "Log level"
-msgstr "Úroveň logovania"
+msgstr "Úroveň zaznamenávania"
 
 msgctxt "#30016"
 msgid "Device name"
@@ -71,7 +71,7 @@ msgstr "Pre filmy"
 
 msgctxt "#30157"
 msgid "Enable enhanced artwork (i.e. cover art)"
-msgstr "Povoliť rozšírené artworky (napr. obaly)"
+msgstr "Povoliť vylepšené obrázky (napr. obaly)"
 
 msgctxt "#30160"
 msgid "Video quality"
@@ -103,7 +103,7 @@ msgstr "Rozpozerané epizódy"
 
 msgctxt "#30179"
 msgid "Next Episodes"
-msgstr "Ďaľšie epizódy"
+msgstr "Ďalšie epizódy"
 
 msgctxt "#30180"
 msgid "Favorite Movies"
@@ -187,11 +187,11 @@ msgstr "Seriály"
 
 msgctxt "#30401"
 msgid "Jellyfin options"
-msgstr "Nastavenia Jellyfinu"
+msgstr "Nastavenia Jellyfin"
 
 msgctxt "#30402"
 msgid "Jellyfin transcode"
-msgstr "Transkódovanie Jellyfinu"
+msgstr "Prekódovanie Jellyfin"
 
 msgctxt "#30405"
 msgid "Add to favorites"
@@ -207,7 +207,7 @@ msgstr "Nastavenia"
 
 msgctxt "#30409"
 msgid "Delete from Jellyfin"
-msgstr "Vymazať z Jellyfinu"
+msgstr "Vymazať z aplikácie Jellyfin"
 
 msgctxt "#30410"
 msgid "Refresh this item"
@@ -215,7 +215,7 @@ msgstr "Obnoviť túto položku"
 
 msgctxt "#30412"
 msgid "Transcode"
-msgstr "Transkódovať"
+msgstr "Prekódovať"
 
 msgctxt "#30500"
 msgid "Verify connection"
@@ -243,11 +243,11 @@ msgstr "Režim prehrávania"
 
 msgctxt "#30512"
 msgid "Enable artwork caching"
-msgstr "Povoliť cachovanie artworkov"
+msgstr "Povoliť ukladanie obrázkov do vyrovnávacej pamäte"
 
 msgctxt "#30515"
 msgid "Paging - max items requested (default: 15)"
-msgstr "Stránkovanie - maximálny počet vyžiadaných položiek (defaultne: 15)"
+msgstr "Stránkovanie - maximálny počet vyžiadaných položiek (predvolené: 15)"
 
 msgctxt "#30516"
 msgid "Playback"
@@ -263,7 +263,7 @@ msgstr "Povoliť kino režim"
 
 msgctxt "#30519"
 msgid "Ask to play trailers"
-msgstr "Opýtať sa na prehratie traileru"
+msgstr "Požiadať o prehrávanie upútaviek"
 
 msgctxt "#30520"
 msgid "Skip the delete confirmation (use at your own risk)"
@@ -279,7 +279,7 @@ msgstr "Prekódovať H.265/HEVC"
 
 msgctxt "#30527"
 msgid "Ignore specials in next episodes"
-msgstr "Preskočiť špeciality v ďaľších epizódach"
+msgstr "Preskočiť špeciality v ďalších epizódach"
 
 msgctxt "#30528"
 msgid "Permanent users"
@@ -319,7 +319,7 @@ msgstr "Povoliť šetrič obrazovky počas synchronizácie"
 
 msgctxt "#30537"
 msgid "Transcode Hi10P"
-msgstr "Transkódovať Hi10P"
+msgstr "Prekódovať Hi10P"
 
 msgctxt "#30539"
 msgid "Login"
@@ -379,7 +379,7 @@ msgstr "Prosím, prihlás sa"
 
 msgctxt "#30613"
 msgid "Change Jellyfin Connect user"
-msgstr "Zmeniť pripojeného používateľa Jellifinu"
+msgstr "Zmeniť používateľa služby Jellyfin Connect"
 
 msgctxt "#30614"
 msgid "Connect to server"
@@ -419,11 +419,11 @@ msgstr "Vyber stream tituliek"
 
 msgctxt "#33015"
 msgid "Delete file from Jellyfin?"
-msgstr "Vymazať súbor z Jellyfinu?"
+msgstr "Vymazať súbor z aplikácie Jellyfin?"
 
 msgctxt "#33016"
 msgid "Play trailers?"
-msgstr "Prehrávať trailery?"
+msgstr "Prehrávať upútavky?"
 
 msgctxt "#33018"
 msgid "Gathering boxsets"
@@ -444,7 +444,7 @@ msgstr "Nové ID zariadenia bolo vygenerované. Kodi sa teraz sám reštartuje."
 msgctxt "#33035"
 msgid "Caution! If you choose Native mode, certain Jellyfin features will be missing, such as: Jellyfin cinema mode, direct stream/transcode options and parental access schedule."
 msgstr ""
-"Pozor! Ak vyberiete natívny režim, niektoré funkcie Jellyfinu budú chýbať, "
+"Pozor! Ak vyberiete natívny režim, niektoré funkcie Jellyfin budú chýbať, "
 "ako napríklad: Režim kina Jellyfin, možnosti priameho streamu / prekódovania "
 "a plán rodičovského prístupu."
 
@@ -509,7 +509,7 @@ msgstr "Si si istý, že chceš resetovať svoju lokálnu Kodi databázu?"
 
 msgctxt "#33086"
 msgid "Remove all cached artwork?"
-msgstr "Odstrániť všetky obrázky z medzipamäti?"
+msgstr "Odstrániť všetky obrázky z vyrovnávacej pamäte?"
 
 msgctxt "#33087"
 msgid "Reset all Jellyfin add-on settings?"
@@ -582,13 +582,13 @@ msgstr "Povoliť kontextové menu"
 
 msgctxt "#33106"
 msgid "Enable the option to transcode"
-msgstr "Povoliť možnosť transkódovať"
+msgstr "Povoliť možnosť prekódovať"
 
 msgctxt "#33107"
 msgid "Users added to the session (no space between users). (eg username,username2)"
 msgstr ""
-"Používatelia pridaní do relácie (medzi používateľmi nie je medzera). (napr. "
-"užívateľskémeno1,užívateľskémeno2)"
+"Používatelia pridaní do relácie (bez medzery medzi používateľmi). (napr. "
+"pouzivatel1,pouzivate2)"
 
 msgctxt "#33108"
 msgid "Notifications are delayed during video playback (except live tv)."
@@ -624,10 +624,10 @@ msgstr "Prispôsobiť pre vzdialené pripojenie"
 
 msgctxt "#33116"
 msgid "Compress artwork (reduces quality)"
-msgstr "Komprimovať artworky (redukuje kvalitu)"
+msgstr "Komprimovať obrázky (zníži sa kvalita)"
 
 msgctxt "#33118"
-msgid "You've change the playback mode. Kodi needs to be reset to apply the change, would you like to do this now?"
+msgid "You've changed the playback mode. Kodi needs to be reset to apply the change, would you like to do this now?"
 msgstr ""
 "Zmenili ste režim prehrávania. Kodi musí byť reštartované pre aplikovanie "
 "zmien, chceli by ste to vykonať teraz?"
@@ -637,7 +637,7 @@ msgid "Something went wrong during the sync. You'll be able to restore progress 
 msgstr ""
 "Niečo zlé sa stalo počas synchronizácie. Budete môcť obnoviť priebeh až po "
 "reštartovaní Kodi. Pokiaľ problém stále pretrváva, prosím, nahláste tento "
-"problém na fóre Jellyfin for Kodi spolu s logom z Kodi."
+"problém na fóre Jellyfin for Kodi spolu so záznamom z Kodi."
 
 msgctxt "#33120"
 msgid "Select the libraries to add"
@@ -664,7 +664,7 @@ msgid "Failed to retrieve latest content updates. No content updates will be app
 msgstr ""
 "Zlyhal príjem aktualizácie najnovšieho obsahu. Žiadne aktualizácie obsahu "
 "nebudú aplikované až do reštartu Kodi. Pokiaľ problém stále pretrváva, "
-"prosím, nahláste tento problém na fóre Jellyfin for Kodi spolu s logom z "
+"prosím, nahláste tento problém na fóre Jellyfin for Kodi spolu so záznamom z "
 "Kodi."
 
 msgctxt "#33129"
@@ -748,11 +748,11 @@ msgstr ""
 
 msgctxt "#33146"
 msgid "Unable to connect to Jellyfin."
-msgstr "Spojenie s Jellyfinom sa nedá nadviazať."
+msgstr "Nepodarilo sa pripojiť k službe Jellyfin."
 
 msgctxt "#33147"
 msgid "Your access to Jellyfin is restricted."
-msgstr "Váš prístup k Jellfinu je obmedzený."
+msgstr "Váš prístup k službe Jellyfin je obmedzený."
 
 msgctxt "#33148"
 msgid "Your access to this server is restricted."
@@ -819,7 +819,7 @@ msgstr "Resetovať hudobnú knižnicu?"
 
 msgctxt "#33164"
 msgid "Mask sensitive information in log (does not apply to kodi logging)"
-msgstr "Zakryť citlivé informácie v logoch (nevzťahuje sa na logy Kodi)"
+msgstr "Zakryť citlivé informácie v záznamoch (nevzťahuje sa na záznamy Kodi)"
 
 msgctxt "#33165"
 msgid "Failed to create backup"
@@ -868,8 +868,8 @@ msgstr "Stránkovanie - sťahovacie vlákna (východzie: 3)"
 msgctxt "#33175"
 msgid "Paging tip: Each download thread requests your max items value from Jellyfin at the same time."
 msgstr ""
-"Tip pre stránkovanie: Každé sťahovacie vlákno si vyžiada vašu maximálnu "
-"hodnotu od Jellyfinu v ten istý čas."
+"Tip k stránkovaniu: Každé stiahnutie súboru zároveň požiada aplikáciu "
+"Jellyfin o hodnotu maximálneho počtu položiek."
 
 msgctxt "#33176"
 msgid "Update or repair your libraries to apply the changes below."
@@ -885,7 +885,7 @@ msgstr "Spracovávam aktualizácie"
 
 msgctxt "#33179"
 msgid "Force transcode"
-msgstr "Vynútiť transkódovanie"
+msgstr "Vynútiť prekódovanie"
 
 msgctxt "#33180"
 msgid "Restart Jellyfin for Kodi"
@@ -914,8 +914,8 @@ msgstr "Povoliť synchronizáciu počas prehrávania (môže spôsobiť sekanie)
 msgctxt "#33186"
 msgid "The Kodi Sync Queue speeds up the start up sync. Other syncs are triggered by server events."
 msgstr ""
-"Kodi Sync Queue urýchly synchronizáciu pri štarte. Ostatné synchronizácie sú "
-"triggerované udalosťami na serveri."
+"Synchronizačná poradie Kodi urýchľuje počiatočnú synchronizáciu. Ostatné "
+"synchronizácie sa spúšťajú na základe udalostí na serveri."
 
 msgctxt "#33191"
 msgid "Restart Jellyfin for Kodi to apply this change?"
@@ -960,7 +960,7 @@ msgstr "Aktualizovať heslo"
 
 msgctxt "#33201"
 msgid "Max artwork resolution"
-msgstr "Maximálne rozlíšenie artworkov"
+msgstr "Maximálne rozlíšenie obrázku"
 
 msgctxt "#33115"
 msgid "Transcode options"
@@ -1037,3 +1037,271 @@ msgstr "Vzdialená cesta"
 msgctxt "#33204"
 msgid "Finish"
 msgstr "Dokončiť"
+
+msgctxt "#30538"
+msgid "Max days in next episodes"
+msgstr "Maximálny počet dní v nasledujúcich epizódach"
+
+msgctxt "#33208"
+msgid "360"
+msgstr "360"
+
+msgctxt "#33209"
+msgid "480"
+msgstr "480"
+
+msgctxt "#33213"
+msgid "Unlimited [default]"
+msgstr "Neobmedzené [predvolené]"
+
+msgctxt "#33215"
+msgid "1.0 Mbps"
+msgstr "1.0 Mbps"
+
+msgctxt "#33221"
+msgid "5.0 Mbps"
+msgstr "5.0 Mbps"
+
+msgctxt "#33228"
+msgid "14.0 Mbps"
+msgstr "14.0 Mbps"
+
+msgctxt "#33230"
+msgid "18.0 Mbps"
+msgstr "18.0 Mbps"
+
+msgctxt "#33226"
+msgid "10.0 Mbps"
+msgstr "10.0 Mbps"
+
+msgctxt "#33237"
+msgid "1000.0 Mbps [default]"
+msgstr "1000.0 Mbps [predvolené]"
+
+msgctxt "#33238"
+msgid "Maximum"
+msgstr "Maximálne"
+
+msgctxt "#33244"
+msgid "320"
+msgstr "320"
+
+msgctxt "#33210"
+msgid "600"
+msgstr "600"
+
+msgctxt "#33211"
+msgid "720"
+msgstr "720"
+
+msgctxt "#33212"
+msgid "1080"
+msgstr "1080"
+
+msgctxt "#33214"
+msgid "0.5 Mbps"
+msgstr "0.5 Mbps"
+
+msgctxt "#33216"
+msgid "1.5 Mbps"
+msgstr "1.5 Mbps"
+
+msgctxt "#33217"
+msgid "2.0 Mbps"
+msgstr "2.0 Mbps"
+
+msgctxt "#33218"
+msgid "2.5 Mbps"
+msgstr "2.5 Mbps"
+
+msgctxt "#33219"
+msgid "3.0 Mbps"
+msgstr "3.0 Mbps"
+
+msgctxt "#33220"
+msgid "4.0 Mbps"
+msgstr "4.0 Mbps"
+
+msgctxt "#33222"
+msgid "6.0 Mbps"
+msgstr "6.0 Mbps"
+
+msgctxt "#33223"
+msgid "7.0 Mbps"
+msgstr "7.0 Mbps"
+
+msgctxt "#33224"
+msgid "8.0 Mbps"
+msgstr "8.0 Mbps"
+
+msgctxt "#33225"
+msgid "9.0 Mbps"
+msgstr "9.0 Mbps"
+
+msgctxt "#33227"
+msgid "12.0 Mbps"
+msgstr "12.0 Mbps"
+
+msgctxt "#33229"
+msgid "16.0 Mbps"
+msgstr "16.0 Mbps"
+
+msgctxt "#33231"
+msgid "20.0 Mbps"
+msgstr "20.0 Mbps"
+
+msgctxt "#33232"
+msgid "25.0 Mbps"
+msgstr "25.0 Mbps"
+
+msgctxt "#33233"
+msgid "30.0 Mbps"
+msgstr "30.0 Mbps"
+
+msgctxt "#33234"
+msgid "35.0 Mbps"
+msgstr "35.0 Mbps"
+
+msgctxt "#33235"
+msgid "40.0 Mbps"
+msgstr "40.0 Mbps"
+
+msgctxt "#33236"
+msgid "100.0 Mbps"
+msgstr "100.0 Mbps"
+
+msgctxt "#33239"
+msgid "96"
+msgstr "96"
+
+msgctxt "#33240"
+msgid "128"
+msgstr "128"
+
+msgctxt "#33241"
+msgid "160"
+msgstr "160"
+
+msgctxt "#33242"
+msgid "192"
+msgstr "192"
+
+msgctxt "#33243"
+msgid "256"
+msgstr "256"
+
+msgctxt "#33245"
+msgid "384"
+msgstr "384"
+
+msgctxt "#33246"
+msgid "Segment Skipping"
+msgstr "Preskakovanie segmentov"
+
+msgctxt "#33247"
+msgid "Enable segment skipping"
+msgstr "Povoliť preskakovanie segmentov"
+
+msgctxt "#33248"
+msgid "Skip mode"
+msgstr "Režim Preskočiť"
+
+msgctxt "#33249"
+msgid "Auto skip"
+msgstr "Automatické preskočenie"
+
+msgctxt "#33250"
+msgid "Show skip button"
+msgstr "Zobraziť tlačidlo Preskočiť"
+
+msgctxt "#33251"
+msgid "Ask every time"
+msgstr "Vždy sa opýtať"
+
+msgctxt "#33252"
+msgid "Introduction"
+msgstr "Úvod"
+
+msgctxt "#33253"
+msgid "Credits"
+msgstr "Titulky"
+
+msgctxt "#33254"
+msgid "Recap"
+msgstr "Zhrnutie"
+
+msgctxt "#33255"
+msgid "Preview"
+msgstr "Náhľad"
+
+msgctxt "#33256"
+msgid "Skip"
+msgstr "Preskočiť"
+
+msgctxt "#33257"
+msgid "Skip intro?"
+msgstr "Preskočiť úvod?"
+
+msgctxt "#33258"
+msgid "Skip credits?"
+msgstr "Preskočiť titulky?"
+
+msgctxt "#33259"
+msgid "Commercial"
+msgstr "Reklama"
+
+msgctxt "#33260"
+msgid "Press SELECT to skip"
+msgstr "Stlačte VYBRAŤ pre preskočenie"
+
+msgctxt "#33261"
+msgid "Off"
+msgstr "Vypnúť"
+
+msgctxt "#30618"
+msgid "Quick Connect"
+msgstr "Rýchle pripojenie"
+
+msgctxt "#30619"
+msgid "Enter this code in the Jellyfin app or web interface:"
+msgstr "Zadajte tento kód do aplikácie Jellyfin alebo do webového rozhrania:"
+
+msgctxt "#30620"
+msgid "Waiting for authorization..."
+msgstr "Čakanie na autorizáciu..."
+
+msgctxt "#30621"
+msgid "Quick Connect is not available on this server"
+msgstr "Rýchle pripojenie na tomto servery nie je k dispozícií"
+
+msgctxt "#30622"
+msgid "Quick Connect timed out. Please try again."
+msgstr "Rýchle pripojenie vypršalo, Prosím skúste to znova."
+
+msgctxt "#33262"
+msgid "Skip {0} ({1})"
+msgstr "Preskočiť {0} ({1})"
+
+msgctxt "#33264"
+msgid "{0}m {1}s"
+msgstr "{0}m {1}s"
+
+msgctxt "#33265"
+msgid "{0}s"
+msgstr "{0}s"
+
+msgctxt "#33266"
+msgid "Intro"
+msgstr "Úvod"
+
+msgctxt "#33267"
+msgid "Outro"
+msgstr "Záver"
+
+msgctxt "#33269"
+msgid "Enable UpNext add-on integration"
+msgstr "Povoliť integráciu doplnku UpNext"
+
+msgctxt "#33268"
+msgid "Ad"
+msgstr "Reklama"

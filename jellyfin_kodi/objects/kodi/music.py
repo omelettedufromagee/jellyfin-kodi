@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, print_function, unicode_literals
 
 ##################################################################################################
 
@@ -180,6 +179,11 @@ class Music(Kodi):
             self.cursor.execute(QU.update_album72, args)
         else:
             self.cursor.execute(QU.update_album74, args)
+
+    def update_album_duration(self, *args):
+        # iAlbumDuration column was added to the album table in music db schema 80
+        if self.version_id >= 80:
+            self.cursor.execute(QU.update_album_duration, args)
 
     def get_album_artist(self, album_id, artists):
 
